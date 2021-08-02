@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "projects": {
+    "configure-automation": {
+      "projectType": "application",
+      "root": "apps/configure-automation",
+      "sourceRoot": "apps/configure-automation/src",
+      "prefix": "notion-automation",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/configure-automation",
+            "index": "apps/configure-automation/src/index.html",
+            "main": "apps/configure-automation/src/main.ts",
+            "polyfills": "apps/configure-automation/src/polyfills.ts",
+            "tsConfig": "apps/configure-automation/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/configure-automation/src/favicon.ico",
+              "apps/configure-automation/src/assets"
+            ],
+            "styles": ["apps/configure-automation/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/configure-automation/src/environments/environment.ts",
+                  "with": "apps/configure-automation/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "configure-automation:build:production"
+            },
+            "development": {
+              "browserTarget": "configure-automation:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "configure-automation:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/configure-automation/src/**/*.ts",
+              "apps/configure-automation/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/configure-automation"],
+          "options": {
+            "jestConfig": "apps/configure-automation/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "configure-automation-e2e": {
+      "root": "apps/configure-automation-e2e",
+      "sourceRoot": "apps/configure-automation-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/configure-automation-e2e/cypress.json",
+            "tsConfig": "apps/configure-automation-e2e/tsconfig.e2e.json",
+            "devServerTarget": "configure-automation:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "configure-automation:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/configure-automation-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "configure-automation"
+}
