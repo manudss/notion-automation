@@ -119,9 +119,60 @@
           }
         }
       }
+    },
+    "notion-runner": {
+      "root": "apps/notion-runner",
+      "sourceRoot": "apps/notion-runner/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/notion-runner",
+            "main": "apps/notion-runner/src/main.ts",
+            "tsConfig": "apps/notion-runner/tsconfig.app.json",
+            "assets": ["apps/notion-runner/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/notion-runner/src/environments/environment.ts",
+                  "with": "apps/notion-runner/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "notion-runner:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/notion-runner/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/notion-runner"],
+          "options": {
+            "jestConfig": "apps/notion-runner/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
+    "analytics": "fcf5b2d0-1c0d-4d5d-962f-1f8dde4089e1",
     "defaultCollection": "@nrwl/angular"
   },
   "schematics": {

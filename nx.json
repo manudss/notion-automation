@@ -33,6 +33,9 @@
     "configure-automation-e2e": {
       "tags": [],
       "implicitDependencies": ["configure-automation"]
+    },
+    "notion-runner": {
+      "tags": []
     }
   }
 }
